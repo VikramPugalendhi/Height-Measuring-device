@@ -1,0 +1,41 @@
+#include<LiquidCrystal.h>
+LiquidCrystal MyLCD(12,11,4,3,2,1);
+const int trig = 5;
+const int echo = 6;
+
+
+int duration;
+int distance;
+int actualdistance;
+int height;
+int sd;
+
+void setup()
+{
+  pinMode(trig,OUTPUT);
+  pinMode(echo,INPUT);
+  MyLCD.begin(16,2);
+  MyLCD.home();
+
+  MyLCD.setCursor(0,1);
+
+  
+}
+void loop()
+{
+ digitalWrite(trig,LOW) ;
+ delayMicroseconds(2);
+ digitalWrite(trig,HIGH);
+ delayMicroseconds(10);
+ digitalWrite(trig,LOW) ;
+ duration = pulseIn(echo, HIGH);
+ distance= duration*0.034/2;
+ actualdistance = 185;
+ height = actualdistance - distance;
+ MyLCD.print("Your Height is:");
+ MyLCD.setCursor(0,1);
+ MyLCD.print(height);
+ MyLCD.print(" cm");   
+ delay(5000);
+ MyLCD.clear();
+ }
